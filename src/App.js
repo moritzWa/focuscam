@@ -15,14 +15,14 @@ function App() {
   const webcamRef = useRef(null)
 
 
-  const LaptopURL = "https://teachablemachine.withgoogle.com/models/34tgAu-tp/";
+  const LaptopURL = "https://teachablemachine.withgoogle.com/models/34tgAu-tp/"; //redo model
   const MonitorURL = "https://teachablemachine.withgoogle.com/models/aDUyx7SWA/";
 
   let model, maxPredictions;
 
 
   const runFocuscam = async () => {
-    const model = await loadModel(LaptopURL)
+    const model = await loadModel(MonitorURL)
 
     setInterval(() => {
       let predictions = detect(model)
@@ -30,7 +30,7 @@ function App() {
       predictions.then(predictions => setFocusState(predictions))
       predictions.then(predictions => predictionsToState(predictions))
 
-    }, 3000)
+    }, 1000)
   }
 
 
@@ -71,9 +71,9 @@ function App() {
   const predictionsToState = (focusState) => {
 
     if (focusState && focusState !== undefined) {
-      /* console.log(focusState)
+      console.log(focusState)
       console.log(focusState[0].probability)
- */
+
       /* 
       0: {className: "focused", probability: 0.1287619024515152}
       1: {className: "distracted", probability: 0.000007463340807589702}
@@ -82,25 +82,27 @@ function App() {
       4: {className: "grinning", probability: 0.8195884227752686}
       */
 
-      const topPrediction = Math.max.apply(Math, focusState.map(function (o) { return o.probability; }))
 
-      console.log("topPrediction", topPrediction)
+      const topPredictionNumber = Math.max.apply(Math, focusState.map(function (o) { return o.probability; }))
 
-      const topPredictionName = focusState.map(state => {
+      console.log("topPrediction", topPredictionNumber)
 
-        if (state.probability == topPrediction) {
-          return state.className
+      focusState.map(state => {
+        if (state.probability === topPredictionNumber) {
+          setTopPrediction(state.className)
+          console.log(state.className)
         }
       })
 
-      console.log("topPredictionName", topPredictionName)
+
+      console.log("topPredictionName")
     }
   }
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Focuscam ={topPrediction}</h1>
+        <h1>Focuscam ={" "} {topPrediction}</h1>
         <p>A web app that tracks and helps you improv your focus using computer vision.
       </p>
         <div>
@@ -111,19 +113,7 @@ function App() {
           </select>
         </div>
       </header>
-      <Webcam ref={webcamRef} audio={false} style={
-        {
-          position: "absolute",
-          marginLeft: "auto",
-          marginRight: "auto",
-          left: 0,
-          right: 0,
-          textAlign: "center",
-          zIndex: 9,
-          width: 640,
-          height: 480
-        }
-      }
+      <Webcam ref={webcamRef} audio={false}
       />
     </div>
   );
