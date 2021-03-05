@@ -2,11 +2,11 @@ import './App.css';
 import React, { useRef, useEffect, useState } from "react";
 
 import Webcam from "react-webcam"
-import { clearStackAndCalculateResult, takeSnapshot, models } from './utilities';
+import { calculatePredsAverage, getMaxClassName, takeSnapshot, models } from './utilities';
 
 function App() {
   const [monitorSetup, setMonitorSetup] = useState(models[0])
-  const [topPrediction, setTopPrediction] = useState(null)
+  const [topPrediction, setTopPrediction] = useState("detecting...")
 
   const webcamRef = useRef(null)
 
@@ -16,12 +16,15 @@ function App() {
 
     async function run() {
       const video = webcamRef.current?.video;
+
       if (video?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
         await takeSnapshot(monitorSetup.name, video);
 
         if (stackSize++ >= 50) {
           console.log('update');
-          setTopPrediction(clearStackAndCalculateResult());
+
+          let topPreduction = getMaxClassName(calculatePredsAverage())
+          setTopPrediction(topPreduction);
           stackSize = 0;
         }
 
@@ -30,6 +33,7 @@ function App() {
         }
       } else {
         if (attached) {
+          // try to run again after wait
           setTimeout(run, 10);
         }
       }
@@ -54,7 +58,7 @@ function App() {
           </select>
         </div>
       </header>
-      <Webcam ref={webcamRef} audio={false} onUserMedia={() => webcamRef.current.audio = false} />
+      <Webcam ref={webcamRef} audio={false} mirrored={false} onUserMedia={() => webcamRef.current.audio = false} style={{ "display": 'none' }} />
     </div>
   );
 }

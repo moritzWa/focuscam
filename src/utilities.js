@@ -1,6 +1,6 @@
 import * as tmImage from '@teachablemachine/image';
 
-let predictions = [];
+// Model Utilities 
 
 export const models = [
   {
@@ -30,6 +30,12 @@ async function getModel(modelName) {
   return modelCache[modelName] = await loadModel(models.find(element => element.name === modelName).modelUrl);
 }
 
+
+
+// Preduction Utilities
+
+let predictions = [];
+
 export async function takeSnapshot(modelName, video) {
   const model = await getModel(modelName);
   const prediction = await model.predict(video);
@@ -37,13 +43,23 @@ export async function takeSnapshot(modelName, video) {
   predictions.push(...prediction);
 }
 
-export function clearStackAndCalculateResult() {
+export function calculatePredsAverage() {
   if (!predictions.length)
     return null;
+
+  // accumulate results
   const result = {};
   predictions.forEach(({ className, probability }) => result[className] = (result[className] ?? 0) + probability);
+
   predictions = [];
 
+  // temporarely turn of 'fingers' since the preds are off here 
+  result.fingers = 0
+
+  return result
+}
+
+export function getMaxClassName(result) {
   let maxProbability = 0;
   let maxClassName;
   Object.entries(result)
@@ -54,5 +70,5 @@ export function clearStackAndCalculateResult() {
       }
     });
 
-  return maxClassName;
+  return maxClassName
 }
