@@ -7,22 +7,28 @@ import * as tmImage from '@teachablemachine/image';
 
 function App() {
 
-  const monitorSetupOptions = ["laptop", "external"]
-  const [monitorSetup, setMonitorSetup] = useState(monitorSetupOptions[0])
+  const monitorSetups = [
+    {
+      name: "laptop",
+      modelUrl: "https://teachablemachine.withgoogle.com/models/34tgAu-tp/",
+    },
+    {
+      name: "external",
+      modelUrl: "https://teachablemachine.withgoogle.com/models/aDUyx7SWA/",
+    }
+  ]
+  const [monitorSetup, setMonitorSetup] = useState(monitorSetups[1])
+
   const [focusState, setFocusState] = useState(null)
   const [topPrediction, setTopPrediction] = useState(null)
 
   const webcamRef = useRef(null)
 
-
-  const LaptopURL = "https://teachablemachine.withgoogle.com/models/34tgAu-tp/"; //redo model
-  const MonitorURL = "https://teachablemachine.withgoogle.com/models/aDUyx7SWA/";
-
   let model, maxPredictions;
 
 
-  const runFocuscam = async () => {
-    const model = await loadModel(MonitorURL)
+  const runFocuscam = async (modelUrl) => {
+    const model = await loadModel(modelUrl)
 
     setInterval(() => {
       let predictions = detect(model)
@@ -33,10 +39,9 @@ function App() {
     }, 1000)
   }
 
-
-  const loadModel = async (setupModelURL) => {
-    const modelURL = setupModelURL + "model.json";
-    const metadataURL = setupModelURL + "metadata.json";
+  const loadModel = async (modelUrl) => {
+    const modelURL = modelUrl + "model.json";
+    const metadataURL = modelUrl + "metadata.json";
 
     model = await tmImage.load(modelURL, metadataURL);
     maxPredictions = model.getTotalClasses();
@@ -65,14 +70,12 @@ function App() {
   }
 
   useEffect(() => {
-    runFocuscam()
-  }, [])
+    runFocuscam(monitorSetup.modelUrl)
+  }, [monitorSetup])
 
   const predictionsToState = (focusState) => {
 
     if (focusState && focusState !== undefined) {
-      console.log(focusState)
-      console.log(focusState[0].probability)
 
       /* 
       0: {className: "focused", probability: 0.1287619024515152}
@@ -85,17 +88,12 @@ function App() {
 
       const topPredictionNumber = Math.max.apply(Math, focusState.map(function (o) { return o.probability; }))
 
-      console.log("topPrediction", topPredictionNumber)
-
       focusState.map(state => {
         if (state.probability === topPredictionNumber) {
           setTopPrediction(state.className)
           console.log(state.className)
         }
       })
-
-
-      console.log("topPredictionName")
     }
   }
 
@@ -107,9 +105,9 @@ function App() {
       </p>
         <div>
           Choose your Monitor Setup:
-        <select value={monitorSetup} onChange={e => setMonitorSetup(e.currentTarget.value)}>
-            <option value="laptop">Laptop Webcam</option>
-            <option value="external">Laptop Webcam with external Monitor</option>
+        <select value={monitorSetup.name} onChange={e => setMonitorSetup(monitorSetups.find(value => value.name === e.currentTarget.value))}>
+            <option value='laptop'>Laptop Webcam</option>
+            <option value='external'>Laptop Webcam with external Monitor</option>
           </select>
         </div>
       </header>
