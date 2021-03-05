@@ -7,6 +7,7 @@ import { calculatePredsAverage, getMaxClassName, takeSnapshot, models } from './
 function App() {
   const [monitorSetup, setMonitorSetup] = useState(models[0])
   const [topPrediction, setTopPrediction] = useState("detecting...")
+  const [distractionDuration, setDistractionDuration] = useState(0)
 
   const webcamRef = useRef(null)
 
@@ -25,8 +26,13 @@ function App() {
 
           let topPreduction = getMaxClassName(calculatePredsAverage())
           setTopPrediction(topPreduction);
+
+          topPrediction == "distracted" ? setDistractionDuration(distractionDuration++)
+
           stackSize = 0;
         }
+
+        console.log(distractionDuration)
 
         if (attached) {
           setTimeout(run, 10);
