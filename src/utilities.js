@@ -32,7 +32,7 @@ async function getModel(modelName) {
 
 
 
-// Preduction Utilities
+// Prediction Utilities
 
 let predictions = [];
 
