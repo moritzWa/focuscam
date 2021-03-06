@@ -61,6 +61,9 @@ function App() {
 		<div className="App">
 			<header className="App-header">
 				<h1>Focuscam = {topPrediction}</h1>
+
+				<h2>You have been distracted for {distractionDuration} Seconds</h2>
+
 				<p>
 					A web app that tracks and helps you improv your focus using computer
 					vision.
