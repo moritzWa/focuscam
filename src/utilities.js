@@ -75,5 +75,3 @@ export function getMaxClassName(result) {
 }
 
 // UI Utilities
-
-//export function

@@ -17,7 +17,10 @@ function App() {
 	const [monitorSetup, setMonitorSetup] = useState(models[defaultMonitorSetup]);
 	const [topPrediction, setTopPrediction] = useState("detecting...");
 	const [distractionDuration, setDistractionDuration] = useState(0);
+	const [pausedDuration, setPausedDuration] = useState(0);
+
 	const [focusCamOn, setFocusCamOn] = useState(true);
+	const [standby, setStandby] = useState(false);
 
 	const webcamRef = useRef(null);
 	const notificationSound = new Audio(juntos_sound);
@@ -41,23 +44,44 @@ function App() {
 
 					console.log("update prediction:", topPreduction);
 
+					if (
+						standby &&
+						(topPrediction === "distracted" || topPrediction === "focused")
+					) {
+						console.log("standby OFF");
+						setStandby(false);
+					}
+
 					if (topPrediction === "distracted") {
 						let newDistractionCount = distractionDuration + 1;
 						setDistractionDuration(newDistractionCount);
 						notificationSound.play();
 					}
 
+					if (topPrediction === "paused") {
+						if (pausedDuration > 5) {
+							console.log("standby ON");
+							setStandby(true);
+						}
+
+						let newPausedDuration = pausedDuration + 1;
+
+						console.log(newPausedDuration);
+
+						setPausedDuration(newPausedDuration);
+					}
+
 					stackSize = 0;
 				}
 
-				//pause 1/100 of a secold untill next snapshot
+				// pause 10ms or 30s untill next snapshot
 				if (attached) {
-					setTimeout(run, 10);
+					setTimeout(run, standby ? 1800 : 10);
 				}
 			} else {
 				if (attached) {
 					// try to run again after waiting
-					setTimeout(run, 10);
+					setTimeout(run, 5000);
 				}
 			}
 		}
