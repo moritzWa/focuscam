@@ -116,7 +116,7 @@ function FocusCam() {
 				</Button>
 
 				<p>
-					A web app that tracks and helps you improv your focus using computer
+					A web app that tracks and helps you improve your focus using computer
 					vision.
 				</p>
 				<div>
