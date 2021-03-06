@@ -1,6 +1,8 @@
 import "./App.css";
 import React, { useRef, useEffect, useState } from "react";
 
+import juntos_sound from "./resources/juntos-607.mp3";
+
 import Webcam from "react-webcam";
 import {
 	calculatePredsAverage,
@@ -15,6 +17,7 @@ function App() {
 	const [distractionDuration, setDistractionDuration] = useState(0);
 
 	const webcamRef = useRef(null);
+	const notificationSound = new Audio(juntos_sound);
 
 	useEffect(() => {
 		let stackSize = 0;
@@ -35,6 +38,7 @@ function App() {
 					if (topPrediction === "distracted") {
 						let newDistractionCount = distractionDuration + 1;
 						setDistractionDuration(newDistractionCount);
+						notificationSound.play();
 					}
 
 					stackSize = 0;
