@@ -71,13 +71,15 @@ function App() {
 		<div className="App">
 			<header className="App-header">
 				{console.log(topPrediction)}
-				<p>Focuscam = {topPrediction}</p>
+				<h1>Focuscam</h1>
+				<p>
+					You are currently <i>{topPrediction}</i>
+				</p>
+				<p>You have been distracted for {distractionDuration} Seconds</p>
 
 				<button onClick={() => setFocusCamOn(!focusCamOn)}>
 					{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
 				</button>
-
-				<h2>You have been distracted for {distractionDuration} Seconds</h2>
 
 				<p>
 					A web app that tracks and helps you improv your focus using computer
