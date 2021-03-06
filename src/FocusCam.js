@@ -100,9 +100,10 @@ function FocusCam() {
 		<>
 			<header className="App-header">
 				{console.log(topPrediction)}
-				<h1>Focuscam</h1>
+				<h1>FocusCam</h1>
 				<p>
-					You are currently <i>{topPrediction}</i>
+					You are currently{" "}
+					<i>{focusCamOn ? topPrediction : "not detecting"}</i>
 				</p>
 				<p>You have been distracted for {distractionDuration} Seconds</p>
 
