@@ -1,5 +1,6 @@
 import "./App.css";
 import React, { useRef, useEffect, useState } from "react";
+import Navbar from "./Navbar.js";
 
 import juntos_sound from "./resources/juntos-607.mp3";
 
@@ -93,6 +94,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<Navbar />
 			<header className="App-header">
 				{console.log(topPrediction)}
 				<h1>Focuscam</h1>
