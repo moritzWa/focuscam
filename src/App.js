@@ -27,26 +27,26 @@ function App() {
 				await takeSnapshot(monitorSetup.name, video);
 
 				if (stackSize++ >= 50) {
-					console.log("update");
+					console.log("update prediction");
 
 					let topPreduction = getMaxClassName(calculatePredsAverage());
 					setTopPrediction(topPreduction);
 
-					if (topPrediction == "distracted") {
-						setDistractionDuration(distractionDuration++);
+					if (topPrediction === "distracted") {
+						let newDistractionCount = distractionDuration + 1;
+						setDistractionDuration(newDistractionCount);
 					}
 
 					stackSize = 0;
 				}
 
-				console.log(distractionDuration);
-
+				//pause 1/100 of a secold untill next snapshot
 				if (attached) {
 					setTimeout(run, 10);
 				}
 			} else {
 				if (attached) {
-					// try to run again after wait
+					// try to run again after waiting
 					setTimeout(run, 10);
 				}
 			}
