@@ -9,7 +9,7 @@ export const models = [
 	},
 	{
 		name: "external",
-		modelUrl: "https://teachablemachine.withgoogle.com/models/aDUyx7SWA/",
+		modelUrl: "https://teachablemachine.withgoogle.com/models/QDbIsPWSP/",
 	},
 ];
 
