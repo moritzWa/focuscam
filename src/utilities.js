@@ -5,7 +5,7 @@ import * as tmImage from "@teachablemachine/image";
 export const models = [
 	{
 		name: "laptop",
-		modelUrl: "https://teachablemachine.withgoogle.com/models/34tgAu-tp/",
+		modelUrl: "https://teachablemachine.withgoogle.com/models/W-3ihJl0y/",
 	},
 	{
 		name: "external",
