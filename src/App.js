@@ -12,9 +12,12 @@ import {
 } from "./utilities";
 
 function App() {
-	const [monitorSetup, setMonitorSetup] = useState(models[0]);
+	const defaultMonitorSetup = 1;
+
+	const [monitorSetup, setMonitorSetup] = useState(models[defaultMonitorSetup]);
 	const [topPrediction, setTopPrediction] = useState("detecting...");
 	const [distractionDuration, setDistractionDuration] = useState(0);
+	const [focusCamOn, setFocusCamOn] = useState(true);
 
 	const webcamRef = useRef(null);
 	const notificationSound = new Audio(juntos_sound);
@@ -26,14 +29,17 @@ function App() {
 		async function run() {
 			const video = webcamRef.current?.video;
 
-			if (video?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA) {
+			if (
+				video?.readyState === HTMLMediaElement.HAVE_ENOUGH_DATA &&
+				focusCamOn
+			) {
 				await takeSnapshot(monitorSetup.name, video);
 
 				if (stackSize++ >= 50) {
-					console.log("update prediction");
-
 					let topPreduction = getMaxClassName(calculatePredsAverage());
 					setTopPrediction(topPreduction);
+
+					console.log("update prediction:", topPreduction);
 
 					if (topPrediction === "distracted") {
 						let newDistractionCount = distractionDuration + 1;
@@ -64,7 +70,12 @@ function App() {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<h1>Focuscam = {topPrediction}</h1>
+				{console.log(topPrediction)}
+				<p>Focuscam = {topPrediction}</p>
+
+				<button onClick={() => setFocusCamOn(!focusCamOn)}>
+					{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
+				</button>
 
 				<h2>You have been distracted for {distractionDuration} Seconds</h2>
 
