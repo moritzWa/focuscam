@@ -3,9 +3,11 @@ import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+//import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import GitHubButton from "react-github-btn";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -13,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
 	},
-	menuButton: {
+	logo: {
 		marginRight: theme.spacing(2),
 	},
 	title: {
 		flexGrow: 1,
+		fontSize: "17px",
 	},
 }));
 
@@ -27,18 +30,23 @@ const Navbar = () => {
 	return (
 		<AppBar position="static">
 			<Toolbar>
-				<IconButton
+				<Typography
+					variant="h5"
 					edge="start"
-					className={classes.menuButton}
+					className={classes.logo}
 					color="inherit"
 					aria-label="menu"
 				>
-					<MenuIcon />
-				</IconButton>
-				<Typography variant="h6" className={classes.title}>
-					News
+					FocusCam
 				</Typography>
-				<Button color="inherit">Login</Button>
+				<Typography className={classes.title}></Typography>
+				<GitHubButton
+					href="https://github.com/moritzWa/focuscam"
+					data-size="large"
+					aria-label="Star moritzWa/focuscam on GitHub"
+				>
+					View On Github
+				</GitHubButton>
 			</Toolbar>
 		</AppBar>
 	);
