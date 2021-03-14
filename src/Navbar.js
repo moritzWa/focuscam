@@ -41,6 +41,7 @@ const Navbar = () => {
 				</Typography>
 				<Typography className={classes.title}></Typography>
 				<GitHubButton
+					className={classes.btn}
 					href="https://github.com/moritzWa/focuscam"
 					data-size="large"
 					aria-label="Star moritzWa/focuscam on GitHub"

@@ -1,10 +1,13 @@
 import "./App.css";
 import React, { useRef, useEffect, useState } from "react";
 
-import Button from "@material-ui/core/Button";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
+import {
+	Switch,
+	Button,
+	InputLabel,
+	MenuItem,
+	Select,
+} from "@material-ui/core";
 
 import juntos_sound from "./resources/juntos-607.mp3";
 
@@ -23,6 +26,7 @@ function FocusCam() {
 	const [topPrediction, setTopPrediction] = useState("detecting...");
 	const [distractionDuration, setDistractionDuration] = useState(0);
 	const [pausedDuration, setPausedDuration] = useState(0);
+	const [sound, setSound] = useState(false);
 
 	const [focusCamOn, setFocusCamOn] = useState(true);
 	const [standby, setStandby] = useState(false);
@@ -60,7 +64,7 @@ function FocusCam() {
 					if (topPrediction === "distracted") {
 						let newDistractionCount = distractionDuration + 1;
 						setDistractionDuration(newDistractionCount);
-						notificationSound.play();
+						if (sound) return notificationSound.play();
 					}
 
 					if (topPrediction === "paused") {
@@ -94,7 +98,16 @@ function FocusCam() {
 		run();
 
 		return () => (attached = false);
-	});
+	}, [
+		focusCamOn,
+		distractionDuration,
+		topPrediction,
+		monitorSetup.name,
+		standby,
+		sound,
+		notificationSound,
+		pausedDuration,
+	]);
 
 	return (
 		<>
@@ -138,6 +151,15 @@ function FocusCam() {
 							Laptop Webcam with external Monitor
 						</MenuItem>
 					</Select>
+					<InputLabel id="demo-simple-select-label">
+						Distraction Notification
+					</InputLabel>
+					<Switch
+						checked={sound}
+						onChange={() => setSound(!sound)}
+						name=""
+						inputProps={{ "aria-label": "secondary checkbox" }}
+					/>
 				</div>
 			</header>
 			<Webcam
