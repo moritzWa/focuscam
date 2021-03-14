@@ -7,6 +7,9 @@ import {
 	InputLabel,
 	MenuItem,
 	Select,
+	Typography,
+	Card,
+	CardContent,
 } from "@material-ui/core";
 
 import juntos_sound from "./resources/juntos-607.mp3";
@@ -28,7 +31,7 @@ function FocusCam() {
 	const [pausedDuration, setPausedDuration] = useState(0);
 	const [sound, setSound] = useState(false);
 
-	const [focusCamOn, setFocusCamOn] = useState(true);
+	const [focusCamOn, setFocusCamOn] = useState(false);
 	const [standby, setStandby] = useState(false);
 
 	const webcamRef = useRef(null);
@@ -107,28 +110,36 @@ function FocusCam() {
 		<>
 			<div className="header">
 				<div className="header__left">
-					<h1>FocusCam</h1>
-					<p>
-						A web app that tracks and helps you improve your focus using
-						computer vision.
-					</p>
+					<div>
+						<Typography variant="h1" gutterBottom>
+							FocusCam
+						</Typography>
+						<Typography variant="h4" gutterBottom>
+							A web app that helps you improve your focus using computer vision.
+						</Typography>
+					</div>
 
-					<p>
-						You are currently{" "}
-						<i>{focusCamOn ? topPrediction : "not detecting"}</i>
-					</p>
-					<p>
-						You have been distracted for{" "}
-						{distractionDuration ? distractionDuration : "0"} Seconds
-					</p>
-
-					<Button
-						variant="contained"
-						color={focusCamOn ? "secondary" : "primary"}
-						onClick={() => setFocusCamOn(!focusCamOn)}
-					>
-						{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
-					</Button>
+					<div className="header__left__bottom">
+						<div className="header__left__bottom__metrics">
+							<Typography variant="h6">
+								You are currently{" "}
+								<i>{focusCamOn ? topPrediction : "not detecting"}</i>
+							</Typography>
+							<Typography variant="h6">
+								You have been distracted for{" "}
+								{distractionDuration ? distractionDuration : "0"} Seconds
+							</Typography>
+						</div>
+						<Button
+							size="large"
+							className="btn-xl"
+							variant="contained"
+							color={focusCamOn ? "secondary" : "primary"}
+							onClick={() => setFocusCamOn(!focusCamOn)}
+						>
+							{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
+						</Button>
+					</div>
 				</div>
 
 				<div className="header__right">
@@ -142,34 +153,55 @@ function FocusCam() {
 				</div>
 			</div>
 
-			<div>
-				<InputLabel id="demo-simple-select-label">
-					Choose your Monitor Setup
-				</InputLabel>
-				<Select
-					labelId="Monitor Setup Name"
-					id="demo-simple-select"
-					value={monitorSetup.name}
-					onChange={(e) =>
-						setMonitorSetup(
-							models.find((value) => value.name === e.target.value)
-						)
-					}
-				>
-					<MenuItem value="laptop">Laptop Webcam</MenuItem>
-					<MenuItem value="external">
-						Laptop Webcam with external Monitor
-					</MenuItem>
-				</Select>
-				<InputLabel id="demo-simple-select-label">
-					Distraction Notification
-				</InputLabel>
-				<Switch
-					checked={sound}
-					onChange={() => setSound(!sound)}
-					name=""
-					inputProps={{ "aria-label": "secondary checkbox" }}
-				/>
+			<div className="content">
+				<Card>
+					<CardContent>
+						<Typography variant="h4" gutterBottom>
+							Settings
+						</Typography>
+						<InputLabel id="demo-simple-select-label">
+							Choose your Monitor Setup
+						</InputLabel>
+						<Select
+							labelId="Monitor Setup Name"
+							id="demo-simple-select"
+							value={monitorSetup.name}
+							onChange={(e) =>
+								setMonitorSetup(
+									models.find((value) => value.name === e.target.value)
+								)
+							}
+						>
+							<MenuItem value="laptop">Laptop Webcam</MenuItem>
+							<MenuItem value="external">
+								Laptop Webcam with external Monitor
+							</MenuItem>
+						</Select>
+						<InputLabel id="demo-simple-select-label">
+							Distraction Notification
+						</InputLabel>
+						<Switch
+							checked={sound}
+							onChange={() => setSound(!sound)}
+							name=""
+							inputProps={{ "aria-label": "secondary checkbox" }}
+						/>
+					</CardContent>
+				</Card>
+				<Card>
+					<CardContent>
+						<Typography variant="h4" gutterBottom>
+							About
+						</Typography>
+						<Typography variant="body1">
+							This app was build using{" "}
+							<a href="https://www.tensorflow.org/js" target="blank_">
+								Tensorflow.js
+							</a>
+							.
+						</Typography>
+					</CardContent>
+				</Card>
 			</div>
 		</>
 	);

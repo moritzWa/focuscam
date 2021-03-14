@@ -1,6 +1,4 @@
 .App {
-	text-align: center;
-	background-color: #f5f5f5;
 	height: 100vh;
 	width: 100vw;
 }
@@ -8,6 +6,11 @@
 .App-logo {
 	height: 40vmin;
 	pointer-events: none;
+}
+
+a {
+	color: #009688;
+	text-decoration: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -24,16 +27,56 @@
 	justify-content: space-evenly;
 }
 
+.header__left {
+	flex-grow: 1;
+	min-width: 40vw;
+	min-height: 450px;
+	justify-content: space-evenly;
+
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-right: 6rem;
+}
+
+.header__left__bottom {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.header__left__bottom__metrics {
+	margin-right: 1rem;
+}
+
 .header__right {
 	flex-grow: 1;
 }
 
 .cam {
 	border-radius: 6rem;
-	height: 450px;
 }
 
-.header__left {
-	flex-grow: 1;
-	min-width: 40vw;
+.content {
+	background-color: #f5f5f5;
+	padding: 5rem;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 3rem;
+}
+
+/* Material UI */
+
+.btn-xl {
+	padding: 13px 22px !important;
+	font-size: 1em !important;
+}
+
+.MuiPaper-rounded {
+	border-radius: 1rem !important;
+}
+
+.MuiCardContent-root {
+	padding: 2rem !important;
 }
