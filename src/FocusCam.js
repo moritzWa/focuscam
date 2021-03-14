@@ -10,7 +10,12 @@ import {
 	Typography,
 	Card,
 	CardContent,
+	Grid,
+	Slider,
 } from "@material-ui/core";
+
+import VolumeDown from "@material-ui/icons/VolumeDown";
+import VolumeUp from "@material-ui/icons/VolumeUp";
 
 import juntos_sound from "./resources/juntos-607.mp3";
 
@@ -29,13 +34,22 @@ function FocusCam() {
 	const [topPrediction, setTopPrediction] = useState("detecting...");
 	const [distractionDuration, setDistractionDuration] = useState(null);
 	const [pausedDuration, setPausedDuration] = useState(0);
-	const [sound, setSound] = useState(false);
 
 	const [focusCamOn, setFocusCamOn] = useState(false);
+	const [sound, setSound] = useState(false);
 	const [standby, setStandby] = useState(false);
+	const [volume, setVolume] = React.useState(30);
 
 	const webcamRef = useRef(null);
 	const notificationSound = new Audio(juntos_sound);
+
+	notificationSound.volume = volume / 100;
+
+	navigator.mediaDevices
+		.enumerateDevices()
+		.then((devices) =>
+			console.log(devices.InputDeviceInfo ? devices.InputDeviceInfo.kind : null)
+		);
 
 	useEffect(() => {
 		let stackSize = 0;
@@ -102,7 +116,6 @@ function FocusCam() {
 		monitorSetup.name,
 		standby,
 		sound,
-		notificationSound,
 		pausedDuration,
 	]);
 
@@ -167,9 +180,12 @@ function FocusCam() {
 							Settings
 						</Typography>
 						<div className="settings__item">
-							<InputLabel id="demo-simple-select-label">
-								Choose your Monitor Setup
-							</InputLabel>
+							<Typography gutterBottom>
+								{" "}
+								Choose your Monitor and Webcam Setup
+							</Typography>
+							<InputLabel id="demo-simple-select-label"></InputLabel>
+
 							<Select
 								labelId="Monitor Setup Name"
 								id="demo-simple-select"
@@ -188,15 +204,34 @@ function FocusCam() {
 						</div>
 
 						<div className="settings__item">
-							<InputLabel id="demo-simple-select-label">
-								Distraction Notification
-							</InputLabel>
+							<Typography gutterBottom>Distraction Notification</Typography>
 							<Switch
 								checked={sound}
 								onChange={() => setSound(!sound)}
 								name=""
 								inputProps={{ "aria-label": "secondary checkbox" }}
 							/>
+						</div>
+
+						<div className="settings__item">
+							<Typography id="continuous-slider" gutterBottom>
+								Volume
+							</Typography>
+							<Grid container spacing={2}>
+								<Grid item>
+									<VolumeDown />
+								</Grid>
+								<Grid item xs>
+									<Slider
+										value={volume}
+										onChange={(event, volume) => setVolume(volume)}
+										aria-labelledby="continuous-slider"
+									/>
+								</Grid>
+								<Grid item>
+									<VolumeUp />
+								</Grid>
+							</Grid>
 						</div>
 					</CardContent>
 				</Card>
