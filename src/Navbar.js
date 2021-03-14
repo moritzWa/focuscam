@@ -38,7 +38,7 @@ const Navbar = () => {
 					color="inherit"
 					aria-label="menu"
 				>
-					FocusCam
+					💡 FocusCam
 				</Typography>
 				<Typography className={classes.title}></Typography>
 				<GitHubButton

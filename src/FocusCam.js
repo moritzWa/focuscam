@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 
 import {
 	Switch,
@@ -41,15 +41,18 @@ function FocusCam() {
 	const [volume, setVolume] = React.useState(30);
 
 	const webcamRef = useRef(null);
-	const notificationSound = new Audio(juntos_sound);
+
+	const notificationSound = useCallback(() => {
+		new Audio(juntos_sound);
+	}, []);
 
 	notificationSound.volume = volume / 100;
 
-	navigator.mediaDevices
+	/* navigator.mediaDevices
 		.enumerateDevices()
 		.then((devices) =>
 			console.log(devices.InputDeviceInfo ? devices.InputDeviceInfo.kind : null)
-		);
+		); */
 
 	useEffect(() => {
 		let stackSize = 0;
@@ -126,7 +129,7 @@ function FocusCam() {
 				<div className="header__left">
 					<div>
 						<Typography variant="h1" gutterBottom>
-							FocusCam
+							💡 FocusCam
 						</Typography>
 						<Typography variant="h4" gutterBottom>
 							A web app that helps you improve your focus using computer vision.
