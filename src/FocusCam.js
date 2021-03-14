@@ -117,6 +117,7 @@ function FocusCam() {
 		standby,
 		sound,
 		pausedDuration,
+		notificationSound,
 	]);
 
 	return (
