@@ -24,7 +24,7 @@ function FocusCam() {
 
 	const [monitorSetup, setMonitorSetup] = useState(models[defaultMonitorSetup]);
 	const [topPrediction, setTopPrediction] = useState("detecting...");
-	const [distractionDuration, setDistractionDuration] = useState(0);
+	const [distractionDuration, setDistractionDuration] = useState(null);
 	const [pausedDuration, setPausedDuration] = useState(0);
 	const [sound, setSound] = useState(false);
 
@@ -50,33 +50,27 @@ function FocusCam() {
 				if (stackSize++ >= 50) {
 					let topPreduction = getMaxClassName(calculatePredsAverage());
 					setTopPrediction(topPreduction);
-
-					console.log("update prediction:", topPreduction);
-
 					if (
 						standby &&
 						(topPrediction === "distracted" || topPrediction === "focused")
 					) {
-						console.log("standby OFF");
 						setStandby(false);
 					}
 
 					if (topPrediction === "distracted") {
 						let newDistractionCount = distractionDuration + 1;
+						console.log("new", newDistractionCount);
+
 						setDistractionDuration(newDistractionCount);
 						if (sound) return notificationSound.play();
 					}
 
 					if (topPrediction === "paused") {
 						if (pausedDuration > 5) {
-							console.log("standby ON");
 							setStandby(true);
 						}
 
 						let newPausedDuration = pausedDuration + 1;
-
-						console.log(newPausedDuration);
-
 						setPausedDuration(newPausedDuration);
 					}
 
@@ -112,13 +106,15 @@ function FocusCam() {
 	return (
 		<>
 			<header className="App-header">
-				{console.log(topPrediction)}
 				<h1>FocusCam</h1>
 				<p>
 					You are currently{" "}
 					<i>{focusCamOn ? topPrediction : "not detecting"}</i>
 				</p>
-				<p>You have been distracted for {distractionDuration} Seconds</p>
+				<p>
+					You have been distracted for{" "}
+					{distractionDuration ? distractionDuration : "0"} Seconds
+				</p>
 
 				<Button
 					variant="contained"
