@@ -26,3 +26,7 @@
 	max-width: 80vw;
 	margin: auto;
 }
+
+.widget .widget-lg {
+	border-radius: 7px;
+}

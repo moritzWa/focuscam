@@ -5,15 +5,15 @@ import Navbar from "./Navbar.js";
 
 import FocusCam from "./FocusCam.js";
 
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
 	palette: {
 		primary: {
-			main: "#00e676",
+			main: "#009688",
 		},
 		secondary: {
-			main: "#ffc400",
+			main: "#f73378",
 		},
 	},
 });
@@ -21,8 +21,10 @@ const theme = createMuiTheme({
 function App() {
 	return (
 		<div className="App">
-			<Navbar />
-			<FocusCam />
+			<ThemeProvider theme={theme}>
+				<Navbar />
+				<FocusCam />
+			</ThemeProvider>
 		</div>
 	);
 }
