@@ -16,13 +16,24 @@
 	}
 }
 
-.App-header {
-	min-height: 75vh;
+.header {
+	min-height: 30vh;
+	margin: 5rem;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	font-size: calc(10px + 2vmin);
-	max-width: 80vw;
-	margin: auto;
+	justify-content: space-evenly;
+}
+
+.header__right {
+	flex-grow: 1;
+}
+
+.cam {
+	border-radius: 6rem;
+	height: 450px;
+}
+
+.header__left {
+	flex-grow: 1;
+	min-width: 40vw;
 }

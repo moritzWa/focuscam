@@ -105,66 +105,72 @@ function FocusCam() {
 
 	return (
 		<>
-			<header className="App-header">
-				<h1>FocusCam</h1>
-				<p>
-					You are currently{" "}
-					<i>{focusCamOn ? topPrediction : "not detecting"}</i>
-				</p>
-				<p>
-					You have been distracted for{" "}
-					{distractionDuration ? distractionDuration : "0"} Seconds
-				</p>
+			<div className="header">
+				<div className="header__left">
+					<h1>FocusCam</h1>
+					<p>
+						A web app that tracks and helps you improve your focus using
+						computer vision.
+					</p>
 
-				<Button
-					variant="contained"
-					color={focusCamOn ? "secondary" : "primary"}
-					onClick={() => setFocusCamOn(!focusCamOn)}
-				>
-					{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
-				</Button>
+					<p>
+						You are currently{" "}
+						<i>{focusCamOn ? topPrediction : "not detecting"}</i>
+					</p>
+					<p>
+						You have been distracted for{" "}
+						{distractionDuration ? distractionDuration : "0"} Seconds
+					</p>
 
-				<p>
-					A web app that tracks and helps you improve your focus using computer
-					vision.
-				</p>
-				<div>
-					<InputLabel id="demo-simple-select-label">
-						Choose your Monitor Setup
-					</InputLabel>
-					<Select
-						labelId="Monitor Setup Name"
-						id="demo-simple-select"
-						value={monitorSetup.name}
-						onChange={(e) =>
-							setMonitorSetup(
-								models.find((value) => value.name === e.target.value)
-							)
-						}
+					<Button
+						variant="contained"
+						color={focusCamOn ? "secondary" : "primary"}
+						onClick={() => setFocusCamOn(!focusCamOn)}
 					>
-						<MenuItem value="laptop">Laptop Webcam</MenuItem>
-						<MenuItem value="external">
-							Laptop Webcam with external Monitor
-						</MenuItem>
-					</Select>
-					<InputLabel id="demo-simple-select-label">
-						Distraction Notification
-					</InputLabel>
-					<Switch
-						checked={sound}
-						onChange={() => setSound(!sound)}
-						name=""
-						inputProps={{ "aria-label": "secondary checkbox" }}
+						{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
+					</Button>
+				</div>
+
+				<div className="header__right">
+					<Webcam
+						className="cam"
+						ref={webcamRef}
+						audio={false}
+						mirrored={false}
+						onUserMedia={() => (webcamRef.current.audio = false)}
 					/>
 				</div>
-			</header>
-			<Webcam
-				ref={webcamRef}
-				audio={false}
-				mirrored={false}
-				onUserMedia={() => (webcamRef.current.audio = false)}
-				style={{ display: "none" }}
-			/>
+			</div>
+
+			<div>
+				<InputLabel id="demo-simple-select-label">
+					Choose your Monitor Setup
+				</InputLabel>
+				<Select
+					labelId="Monitor Setup Name"
+					id="demo-simple-select"
+					value={monitorSetup.name}
+					onChange={(e) =>
+						setMonitorSetup(
+							models.find((value) => value.name === e.target.value)
+						)
+					}
+				>
+					<MenuItem value="laptop">Laptop Webcam</MenuItem>
+					<MenuItem value="external">
+						Laptop Webcam with external Monitor
+					</MenuItem>
+				</Select>
+				<InputLabel id="demo-simple-select-label">
+					Distraction Notification
+				</InputLabel>
+				<Switch
+					checked={sound}
+					onChange={() => setSound(!sound)}
+					name=""
+					inputProps={{ "aria-label": "secondary checkbox" }}
+				/>
+			</div>
 		</>
 	);
 }
