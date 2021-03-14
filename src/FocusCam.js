@@ -143,13 +143,20 @@ function FocusCam() {
 				</div>
 
 				<div className="header__right">
-					<Webcam
-						className="cam"
-						ref={webcamRef}
-						audio={false}
-						mirrored={false}
-						onUserMedia={() => (webcamRef.current.audio = false)}
-					/>
+					<div className="cam__container">
+						<div
+							className={
+								focusCamOn ? "cam__overlay cam__overlay-" + topPrediction : null
+							}
+						></div>
+						<Webcam
+							className="cam"
+							ref={webcamRef}
+							audio={false}
+							mirrored={false}
+							onUserMedia={() => (webcamRef.current.audio = false)}
+						/>
+					</div>
 				</div>
 			</div>
 
@@ -159,33 +166,38 @@ function FocusCam() {
 						<Typography variant="h4" gutterBottom>
 							Settings
 						</Typography>
-						<InputLabel id="demo-simple-select-label">
-							Choose your Monitor Setup
-						</InputLabel>
-						<Select
-							labelId="Monitor Setup Name"
-							id="demo-simple-select"
-							value={monitorSetup.name}
-							onChange={(e) =>
-								setMonitorSetup(
-									models.find((value) => value.name === e.target.value)
-								)
-							}
-						>
-							<MenuItem value="laptop">Laptop Webcam</MenuItem>
-							<MenuItem value="external">
-								Laptop Webcam with external Monitor
-							</MenuItem>
-						</Select>
-						<InputLabel id="demo-simple-select-label">
-							Distraction Notification
-						</InputLabel>
-						<Switch
-							checked={sound}
-							onChange={() => setSound(!sound)}
-							name=""
-							inputProps={{ "aria-label": "secondary checkbox" }}
-						/>
+						<div className="settings__item">
+							<InputLabel id="demo-simple-select-label">
+								Choose your Monitor Setup
+							</InputLabel>
+							<Select
+								labelId="Monitor Setup Name"
+								id="demo-simple-select"
+								value={monitorSetup.name}
+								onChange={(e) =>
+									setMonitorSetup(
+										models.find((value) => value.name === e.target.value)
+									)
+								}
+							>
+								<MenuItem value="laptop">Laptop Webcam</MenuItem>
+								<MenuItem value="external">
+									Laptop Webcam with external Monitor
+								</MenuItem>
+							</Select>
+						</div>
+
+						<div className="settings__item">
+							<InputLabel id="demo-simple-select-label">
+								Distraction Notification
+							</InputLabel>
+							<Switch
+								checked={sound}
+								onChange={() => setSound(!sound)}
+								name=""
+								inputProps={{ "aria-label": "secondary checkbox" }}
+							/>
+						</div>
 					</CardContent>
 				</Card>
 				<Card>

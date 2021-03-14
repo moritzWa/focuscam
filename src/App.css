@@ -54,8 +54,28 @@ a {
 	flex-grow: 1;
 }
 
+.cam__container {
+}
+
 .cam {
 	border-radius: 6rem;
+}
+
+.cam__overlay {
+	border-radius: 6rem;
+	position: absolute;
+	float: left;
+	width: 640px;
+	height: 480px;
+	z-index: 2;
+}
+
+.cam__overlay-focused {
+	background-color: rgba(127, 255, 223, 0.308);
+}
+
+.cam__overlay-distracted {
+	background-color: rgba(255, 127, 255, 0.308);
 }
 
 .content {
@@ -64,6 +84,10 @@ a {
 	display: grid;
 	grid-template-columns: auto auto;
 	grid-gap: 3rem;
+}
+
+.settings__item {
+	margin: 2rem 0;
 }
 
 /* Material UI */

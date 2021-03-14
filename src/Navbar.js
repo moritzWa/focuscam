@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,
+		zIndex: 5,
 	},
 	logo: {
 		marginRight: theme.spacing(2),
@@ -28,7 +29,7 @@ const Navbar = () => {
 	const classes = useStyles();
 
 	return (
-		<AppBar position="static">
+		<AppBar position="sticky">
 			<Toolbar>
 				<Typography
 					variant="h5"
