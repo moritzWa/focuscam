@@ -249,7 +249,19 @@ function FocusCam() {
 							<a href="https://www.tensorflow.org/js" target="blank_">
 								Tensorflow.js
 							</a>
-							.
+							. As a next step I plan to replace the model with the{" "}
+							<a
+								href="https://google.github.io/mediapipe/solutions/iris"
+								target="blank_"
+							>
+								MediaPipe Iris model
+							</a>{" "}
+							presented in the paper{" "}
+							<a href="https://arxiv.org/pdf/2006.11341.pdf" target="blank_">
+								Real-time Pupil Tracking from Monocular Video for Digital
+								Puppetry
+							</a>{" "}
+							last june.
 						</Typography>
 					</CardContent>
 				</Card>
