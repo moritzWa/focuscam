@@ -26,7 +26,7 @@ a {
 @media (max-width: 1400px) {
 	.header__left {
 		margin-right: 2rem !important;
-		transform: scale(0.8);
+		transform: scale(0.85);
 	}
 
 	.header {
@@ -163,6 +163,7 @@ a {
 .btn-xl {
 	padding: 13px 22px !important;
 	font-size: 1em !important;
+	min-width: 8rem;
 }
 
 .MuiPaper-rounded {
@@ -171,4 +172,8 @@ a {
 
 .MuiCardContent-root {
 	padding: 2rem !important;
+}
+
+.MuiButton-root {
+	border-radius: 7px !important;
 }

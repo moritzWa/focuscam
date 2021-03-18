@@ -33,6 +33,8 @@ function FocusCam() {
 	const [monitorSetup, setMonitorSetup] = useState(models[defaultMonitorSetup]);
 	const [topPrediction, setTopPrediction] = useState("detecting...");
 	const [distractionDuration, setDistractionDuration] = useState(null);
+	const [focusDuration, setFocusDuration] = useState(null);
+
 	const [pausedDuration, setPausedDuration] = useState(0);
 
 	const [focusCamOn, setFocusCamOn] = useState(false);
@@ -70,11 +72,17 @@ function FocusCam() {
 				if (stackSize++ >= 50) {
 					let topPreduction = getMaxClassName(calculatePredsAverage());
 					setTopPrediction(topPreduction);
+
 					if (
 						standby &&
 						(topPrediction === "distracted" || topPrediction === "focused")
 					) {
 						setStandby(false);
+					}
+
+					if (topPrediction === "focused") {
+						let newFocusDuration = focusDuration + 1;
+						setFocusDuration(newFocusDuration);
 					}
 
 					if (topPrediction === "distracted") {
@@ -121,7 +129,11 @@ function FocusCam() {
 		sound,
 		pausedDuration,
 		notificationSound,
+		focusDuration,
 	]);
+
+	const totalTracked = focusDuration + distractionDuration;
+	const focusPercentage = Math.floor((focusDuration / totalTracked) * 100);
 
 	return (
 		<>
@@ -131,7 +143,7 @@ function FocusCam() {
 						<Typography variant="h1" gutterBottom>
 							💡 FocusCam
 						</Typography>
-						<Typography variant="h4" gutterBottom>
+						<Typography variant="h5" gutterBottom>
 							A web app that helps you improve your focus using computer vision.
 						</Typography>
 					</div>
@@ -140,11 +152,13 @@ function FocusCam() {
 						<div className="header__left__bottom__metrics">
 							<Typography variant="h6">
 								You are currently{" "}
-								<i>{focusCamOn ? topPrediction : "not detecting"}</i>
+								<i>{focusCamOn ? topPrediction : "not tracking."}</i>
 							</Typography>
 							<Typography variant="h6">
 								You have been distracted for{" "}
-								{distractionDuration ? distractionDuration : "0"} Seconds
+								{distractionDuration ? distractionDuration : "0"}s, focused for{" "}
+								{focusDuration ? focusDuration : "0"}s. That is{" "}
+								{focusPercentage}% Focus.
 							</Typography>
 						</div>
 						<Button
@@ -154,7 +168,7 @@ function FocusCam() {
 							color={focusCamOn ? "secondary" : "primary"}
 							onClick={() => setFocusCamOn(!focusCamOn)}
 						>
-							{focusCamOn ? "Turn Detection Off" : "Turn Detection On"}
+							{focusCamOn ? "Turn OFF" : "Turn ON"}
 						</Button>
 					</div>
 				</div>
@@ -249,7 +263,7 @@ function FocusCam() {
 							<a href="https://www.tensorflow.org/js" target="blank_">
 								Tensorflow.js
 							</a>
-							. As a next step I plan to replace the model with the{" "}
+							. As a next step, I plan to replace the model with the{" "}
 							<a
 								href="https://google.github.io/mediapipe/solutions/iris"
 								target="blank_"
@@ -261,7 +275,7 @@ function FocusCam() {
 								Real-time Pupil Tracking from Monocular Video for Digital
 								Puppetry
 							</a>{" "}
-							last june.
+							last June.
 						</Typography>
 					</CardContent>
 				</Card>
