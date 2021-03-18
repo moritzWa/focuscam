@@ -13,6 +13,8 @@ a {
 	text-decoration: none;
 }
 
+/* ------------------ Header  ------------------ */
+
 .header {
 	min-height: 30vh;
 	margin: 5rem;
@@ -87,7 +89,7 @@ a {
 	flex-grow: 1;
 }
 
-/* ------ Cam  ----- */
+/* ------------------ Cam  ------------------ */
 
 .cam__container {
 }
@@ -129,6 +131,8 @@ a {
 	}
 }
 
+/* ------------------ Content  ------------------ */
+
 .content {
 	background-color: #f5f5f5;
 	padding: 5rem;
@@ -141,7 +145,7 @@ a {
 	margin: 2rem 0;
 }
 
-/* Material UI */
+/* ------------------ Material UI  ------------------ */
 
 .btn-xl {
 	padding: 13px 22px !important;
