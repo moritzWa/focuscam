@@ -13,18 +13,51 @@ a {
 	text-decoration: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	.App-logo {
-		animation: App-logo-spin infinite 20s linear;
-	}
-}
-
 .header {
 	min-height: 30vh;
 	margin: 5rem;
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
+}
+
+@media (max-width: 1400px) {
+	.header__left {
+		margin-right: 2rem !important;
+		transform: scale(0.8);
+	}
+
+	.header {
+		margin: 3rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+
+	.cam {
+		border-radius: 6rem;
+		width: 640px;
+		height: 480px;
+	}
+
+	.cam__overlay {
+		border-radius: 6rem;
+		position: absolute;
+		float: left;
+		width: 640px;
+		height: 480px;
+		z-index: 2;
+	}
+}
+
+@media (max-width: 1000px) {
+	.header__left {
+		transform: none;
+	}
+
+	.header {
+		flex-direction: column;
+	}
 }
 
 .header__left {
@@ -54,11 +87,15 @@ a {
 	flex-grow: 1;
 }
 
+/* ------ Cam  ----- */
+
 .cam__container {
 }
 
 .cam {
 	border-radius: 6rem;
+	width: 640px;
+	height: 480px;
 }
 
 .cam__overlay {
@@ -76,6 +113,20 @@ a {
 
 .cam__overlay-distracted {
 	background-color: rgba(255, 127, 255, 0.308);
+}
+
+@media (max-width: 1400px) {
+	.cam {
+		border-radius: 4rem;
+		width: 480px;
+		height: 360px;
+	}
+
+	.cam__overlay {
+		border-radius: 4em;
+		width: 480px;
+		height: 360px;
+	}
 }
 
 .content {
