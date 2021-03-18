@@ -163,7 +163,7 @@ a {
 .btn-xl {
 	padding: 13px 22px !important;
 	font-size: 1em !important;
-	min-width: 8rem;
+	min-width: 8rem !important;
 }
 
 .MuiPaper-rounded {

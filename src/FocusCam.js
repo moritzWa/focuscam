@@ -157,8 +157,10 @@ function FocusCam() {
 							<Typography variant="h6">
 								You have been distracted for{" "}
 								{distractionDuration ? distractionDuration : "0"}s, focused for{" "}
-								{focusDuration ? focusDuration : "0"}s. That is{" "}
-								{focusPercentage}% Focus.
+								{focusDuration ? focusDuration : "0"}s.
+								{focusPercentage
+									? " That is " + focusPercentage + "% Focus."
+									: null}
 							</Typography>
 						</div>
 						<Button
