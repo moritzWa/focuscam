@@ -12,6 +12,7 @@ import {
 	CardContent,
 	Grid,
 	Slider,
+	Box,
 } from "@material-ui/core";
 
 import VolumeDown from "@material-ui/icons/VolumeDown";
@@ -137,7 +138,7 @@ function FocusCam() {
 
 	return (
 		<>
-			<div className="header_wrapper">
+			<div className="header__wrapper">
 				<div className="header">
 					<div className="header__left">
 						<div>
@@ -197,7 +198,7 @@ function FocusCam() {
 					</div>
 				</div>
 			</div>
-			<div className="content_wrapper">
+			<div className="content__wrapper">
 				<div className="content">
 					<Card>
 						<CardContent>
@@ -282,7 +283,31 @@ function FocusCam() {
 									Real-time Pupil Tracking from Monocular Video for Digital
 									Puppetry
 								</a>{" "}
-								last June.
+								last June 2020.
+							</Typography>
+							<Box p={3}></Box>
+							<Typography variant="h5" gutterBottom>
+								Privacy
+							</Typography>
+							<Typography variant="body1">
+								To clarify, this model is running on your computer and not
+								sending any data to a server. You can review the code{" "}
+								<a target="blank_" href="https://github.com/moritzWa/focuscam">
+									here{" "}
+								</a>
+								or by looking at your developer console's network tab.
+							</Typography>
+							<Box p={2}></Box>
+							<Typography variant="h5" gutterBottom>
+								Cognitive Augmentation Software
+							</Typography>
+							<Typography variant="body1">
+								FocusCam can be described as{" "}
+								<a target="blank_" href="https://github.com/moritzWa/focuscam">
+									Cognitive Augmentation Software
+								</a>
+								. This is software that augments one or multiple processes. In
+								this case, your ability to stay concentrated.
 							</Typography>
 						</CardContent>
 					</Card>
