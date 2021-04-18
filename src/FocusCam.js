@@ -137,150 +137,156 @@ function FocusCam() {
 
 	return (
 		<>
-			<div className="header">
-				<div className="header__left">
-					<div>
-						<Typography variant="h1" gutterBottom>
-							💡 FocusCam
-						</Typography>
-						<Typography variant="h5" gutterBottom>
-							A web app that helps you improve your focus using computer vision.
-						</Typography>
-					</div>
-
-					<div className="header__left__bottom">
-						<div className="header__left__bottom__metrics">
-							<Typography variant="h6">
-								You are currently{" "}
-								<i>{focusCamOn ? topPrediction : "not tracking."}</i>
+			<div className="header_wrapper">
+				<div className="header">
+					<div className="header__left">
+						<div>
+							<Typography variant="h1" gutterBottom>
+								💡 FocusCam
 							</Typography>
-							<Typography variant="h6">
-								You have been distracted for{" "}
-								{distractionDuration ? distractionDuration : "0"}s, focused for{" "}
-								{focusDuration ? focusDuration : "0"}s.
-								{focusPercentage
-									? " That is " + focusPercentage + "% Focus."
-									: null}
+							<Typography variant="h5" gutterBottom>
+								A web app that helps you improve your focus using computer
+								vision.
 							</Typography>
 						</div>
-						<Button
-							size="large"
-							className="btn-xl"
-							variant="contained"
-							color={focusCamOn ? "secondary" : "primary"}
-							onClick={() => setFocusCamOn(!focusCamOn)}
-						>
-							{focusCamOn ? "Turn OFF" : "Turn ON"}
-						</Button>
-					</div>
-				</div>
 
-				<div className="header__right">
-					<div className="cam__container">
-						<div
-							className={
-								focusCamOn ? "cam__overlay cam__overlay-" + topPrediction : null
-							}
-						></div>
-						<Webcam
-							className="cam"
-							ref={webcamRef}
-							audio={false}
-							mirrored={false}
-							onUserMedia={() => (webcamRef.current.audio = false)}
-						/>
+						<div className="header__left__bottom">
+							<div className="header__left__bottom__metrics">
+								<Typography variant="h6">
+									You are currently{" "}
+									<i>{focusCamOn ? topPrediction : "not tracking."}</i>
+								</Typography>
+								<Typography variant="h6">
+									You have been distracted for{" "}
+									{distractionDuration ? distractionDuration : "0"}s, focused
+									for {focusDuration ? focusDuration : "0"}s.
+									{focusPercentage
+										? " That is " + focusPercentage + "% Focus."
+										: null}
+								</Typography>
+							</div>
+							<Button
+								size="large"
+								className="btn-xl"
+								variant="contained"
+								color={focusCamOn ? "secondary" : "primary"}
+								onClick={() => setFocusCamOn(!focusCamOn)}
+							>
+								{focusCamOn ? "Turn OFF" : "Turn ON"}
+							</Button>
+						</div>
+					</div>
+
+					<div className="header__right">
+						<div className="cam__container">
+							<div
+								className={
+									focusCamOn
+										? "cam__overlay cam__overlay-" + topPrediction
+										: null
+								}
+							></div>
+							<Webcam
+								className="cam"
+								ref={webcamRef}
+								audio={false}
+								mirrored={false}
+								onUserMedia={() => (webcamRef.current.audio = false)}
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<div className="content">
-				<Card>
-					<CardContent>
-						<Typography variant="h4" gutterBottom>
-							Settings
-						</Typography>
-						<div className="settings__item">
-							<Typography gutterBottom>
-								{" "}
-								Choose your Monitor and Webcam Setup
+			<div className="content_wrapper">
+				<div className="content">
+					<Card>
+						<CardContent>
+							<Typography variant="h4" gutterBottom>
+								Settings
 							</Typography>
-							<InputLabel id="demo-simple-select-label"></InputLabel>
+							<div className="settings__item">
+								<Typography gutterBottom>
+									{" "}
+									Choose your Monitor and Webcam Setup
+								</Typography>
+								<InputLabel id="demo-simple-select-label"></InputLabel>
 
-							<Select
-								labelId="Monitor Setup Name"
-								id="demo-simple-select"
-								value={monitorSetup.name}
-								onChange={(e) =>
-									setMonitorSetup(
-										models.find((value) => value.name === e.target.value)
-									)
-								}
-							>
-								<MenuItem value="laptop">Laptop Webcam</MenuItem>
-								<MenuItem value="external">
-									Laptop Webcam with external Monitor
-								</MenuItem>
-							</Select>
-						</div>
+								<Select
+									labelId="Monitor Setup Name"
+									id="demo-simple-select"
+									value={monitorSetup.name}
+									onChange={(e) =>
+										setMonitorSetup(
+											models.find((value) => value.name === e.target.value)
+										)
+									}
+								>
+									<MenuItem value="laptop">Laptop Webcam</MenuItem>
+									<MenuItem value="external">
+										Laptop Webcam with external Monitor
+									</MenuItem>
+								</Select>
+							</div>
 
-						<div className="settings__item">
-							<Typography gutterBottom>Distraction Notification</Typography>
-							<Switch
-								checked={sound}
-								onChange={() => setSound(!sound)}
-								name=""
-								inputProps={{ "aria-label": "secondary checkbox" }}
-							/>
-						</div>
+							<div className="settings__item">
+								<Typography gutterBottom>Distraction Notification</Typography>
+								<Switch
+									checked={sound}
+									onChange={() => setSound(!sound)}
+									name=""
+									inputProps={{ "aria-label": "secondary checkbox" }}
+								/>
+							</div>
 
-						<div className="settings__item">
-							<Typography id="continuous-slider" gutterBottom>
-								Volume
+							<div className="settings__item">
+								<Typography id="continuous-slider" gutterBottom>
+									Volume
+								</Typography>
+								<Grid container spacing={2}>
+									<Grid item>
+										<VolumeDown />
+									</Grid>
+									<Grid item xs>
+										<Slider
+											value={volume}
+											onChange={(event, volume) => setVolume(volume)}
+											aria-labelledby="continuous-slider"
+										/>
+									</Grid>
+									<Grid item>
+										<VolumeUp />
+									</Grid>
+								</Grid>
+							</div>
+						</CardContent>
+					</Card>
+					<Card>
+						<CardContent>
+							<Typography variant="h4" gutterBottom>
+								About
 							</Typography>
-							<Grid container spacing={2}>
-								<Grid item>
-									<VolumeDown />
-								</Grid>
-								<Grid item xs>
-									<Slider
-										value={volume}
-										onChange={(event, volume) => setVolume(volume)}
-										aria-labelledby="continuous-slider"
-									/>
-								</Grid>
-								<Grid item>
-									<VolumeUp />
-								</Grid>
-							</Grid>
-						</div>
-					</CardContent>
-				</Card>
-				<Card>
-					<CardContent>
-						<Typography variant="h4" gutterBottom>
-							About
-						</Typography>
-						<Typography variant="body1">
-							This app was build using{" "}
-							<a href="https://www.tensorflow.org/js" target="blank_">
-								Tensorflow.js
-							</a>
-							. As a next step, I plan to replace the model with the{" "}
-							<a
-								href="https://google.github.io/mediapipe/solutions/iris"
-								target="blank_"
-							>
-								MediaPipe Iris model
-							</a>{" "}
-							presented in the paper{" "}
-							<a href="https://arxiv.org/pdf/2006.11341.pdf" target="blank_">
-								Real-time Pupil Tracking from Monocular Video for Digital
-								Puppetry
-							</a>{" "}
-							last June.
-						</Typography>
-					</CardContent>
-				</Card>
+							<Typography variant="body1">
+								This app was build using{" "}
+								<a href="https://www.tensorflow.org/js" target="blank_">
+									Tensorflow.js
+								</a>
+								. As a next step, I plan to replace the model with the{" "}
+								<a
+									href="https://google.github.io/mediapipe/solutions/iris"
+									target="blank_"
+								>
+									MediaPipe Iris model
+								</a>{" "}
+								presented in the paper{" "}
+								<a href="https://arxiv.org/pdf/2006.11341.pdf" target="blank_">
+									Real-time Pupil Tracking from Monocular Video for Digital
+									Puppetry
+								</a>{" "}
+								last June.
+							</Typography>
+						</CardContent>
+					</Card>
+				</div>
 			</div>
 		</>
 	);
